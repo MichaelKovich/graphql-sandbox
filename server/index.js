@@ -7,12 +7,21 @@ const schema = require(`${__dirname}/graphql/schema`);
 const app = express();
 app.use(cors());
 
-// GraphQL
+// Entry point where we utilize the graphic interface
 app.use(
   '/graphql',
   graphqlHTTP({
     schema,
     graphiql: true,
+  }),
+);
+
+// Entry point for React application
+app.post(
+  '/graphql',
+  graphqlHTTP({
+    schema,
+    graphiql: false,
   }),
 );
 

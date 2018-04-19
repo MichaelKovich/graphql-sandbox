@@ -18,6 +18,14 @@ app.use(
   })
 );
 
+app.post(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    graphiql: false
+  })
+);
+
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
