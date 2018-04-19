@@ -8,6 +8,10 @@ export const GET_PEOPLE = gql`
       id
       name
       height
+      films {
+        title
+        releaseDate
+      }
     }
   }
 `;

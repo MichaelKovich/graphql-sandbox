@@ -10,6 +10,14 @@ const axios = require('axios');
 
 const users = require(`${__dirname}/model`);
 
+const BASE_URL = 'http://www.swapi.co';
+
+const getFilms = url =>
+  axios
+    .get(url)
+    .then(response => response.data)
+    .catch(err => console.log(err));
+
 const PersonType = new GraphQLObjectType({
   name: 'Person',
   fields() {
@@ -32,6 +40,33 @@ const PersonType = new GraphQLObjectType({
         type: GraphQLInt,
         resolve(person) {
           return person.height;
+        },
+      },
+      films: {
+        type: new GraphQLList(MovieType),
+        resolve(person) {
+          return person.films[0] ? person.films.map(getFilms) : [];
+        },
+      },
+    };
+  },
+});
+
+const MovieType = new GraphQLObjectType({
+  name: 'Movie',
+  fields() {
+    return {
+      title: {
+        type: GraphQLString,
+        resolve(movie) {
+          return movie.title;
+        },
+      },
+      releaseDate: {
+        type: GraphQLString,
+        resolve(movie) {
+          // movie is simply the object that will be passed in and has title and release_date properties
+          return movie.release_date;
         },
       },
     };

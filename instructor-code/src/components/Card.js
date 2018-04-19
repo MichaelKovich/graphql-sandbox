@@ -19,6 +19,15 @@ const Card = props => (
     <h1>{props.name}</h1>
     <p>{props.height}</p>
     <br />
+    <h2>Film Appearances</h2>
+    <div>
+      {props.films.map(val => (
+        <div>
+          <p>{val.title}</p>
+          <p>{val.releaseDate}</p>
+        </div>
+      ))}
+    </div>
   </div>
 );
 

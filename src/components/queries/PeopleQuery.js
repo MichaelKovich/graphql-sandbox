@@ -9,6 +9,9 @@ export const GET_PEOPLE = gql`
       id
       height
       name
+      films {
+        title
+      }
     }
   }
 `;

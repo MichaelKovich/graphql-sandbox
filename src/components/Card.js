@@ -23,6 +23,8 @@ const Card = props => (
     <p>Film Appearances:</p>
     <p>{props.films.length}</p> */}
     <br />
+    <h2>Film Appearances</h2>
+    <div>{props.films.map(val => <p>{val.title}</p>)}</div>
   </div>
 );
 
