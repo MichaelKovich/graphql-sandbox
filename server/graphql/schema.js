@@ -84,10 +84,52 @@ const Query = new GraphQLObjectType({
           return users;
         },
       },
+      person: {
+        type: PersonType,
+        args: {
+          id: {type: GraphQLNonNull(GraphQLInt)},
+        },
+        resolve(root, args) {
+          return users.filter(user => user.id === args.id)[0];
+          // database call here if we were working with an actual DB
+        },
+      },
+    };
+  },
+});
+
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields() {
+    return {
+      addPerson: {
+        type: PersonType,
+        args: {
+          id: {type: GraphQLNonNull(GraphQLInt)},
+          name: {type: GraphQLString},
+          height: {type: GraphQLInt},
+          films: {type: new GraphQLList(GraphQLString)},
+        },
+        resolve(root, args) {
+          users.push({...args});
+          return users[users.length - 1];
+        },
+      },
+      deletePerson: {
+        type: GraphQLInt, // because that's what we're sending back
+        args: {
+          id: {type: GraphQLNonNull(GraphQLInt)},
+        },
+        resolve(root, args) {
+          users = users.filter(user => user.id !== args.id);
+          return args.id;
+        },
+      },
     };
   },
 });
 
 module.exports = new GraphQLSchema({
   query: Query,
+  mutation: Mutation,
 });
